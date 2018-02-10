@@ -211,7 +211,7 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
   optional_params = initialize_method.parameters.find_all { |req, name| req == :opt }.map { |req, name| name }
 
-  inspec_document += "\n\nUsage:"
+  inspec_document += "\n\n```ruby"
   inspec_document += "\n#{resource_name}"
 
   if !mandatory_params.empty?
@@ -219,8 +219,6 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   end
 
   if !optional_params.empty?
-    inspec_document += "\n\nOptional Usage:"
-
     inspec_document += "\n#{resource_name}("
 
     if !mandatory_params.empty?
@@ -230,7 +228,9 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
     inspec_document += "#{optional_params.join(', ')})"
   end
 
+  inspec_document += "\n```"
 
+  # Now back to our properties and matchers
 
   ignore_methods = [ :to_s, :method_missing ]
 
@@ -241,7 +241,15 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   be_matchers = matchers.map do |name|
     prefix = ""
 
-    if !name.to_s.start_with?('has') && !name.to_s == 'exist'
+    # matchers that start with has shouldn't prefix with be
+    #
+    # `be_has_interface` seems like a bad idea.
+    #
+    # matcher that is exist also should not prefix with be
+    #
+    # `be_exist` also seems like a bad idea
+    #
+    if !name.to_s.start_with?('has') && !(name.to_s == 'exist')
       prefix = "be_"
     end
 
@@ -250,13 +258,101 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
   properties = methods - matchers
 
+  # Remove the properties that end with an equal sign. Those are things
+  # that you can assign a value and while public/protected they are not
+  # something that are usually verified.
+
+  properties = properties.reject { |name| name.to_s.end_with?('=') }
 
   if !properties.empty?
-    inspec_document += "\n\n### Properties\n\n#{properties.join(', ')}"
+
+    # General list of properties ...
+
+    inspec_document += "\n\n### Properties"
+    inspec_document += "\n\n    #{properties.join(', ')}"
+
+    inspec_document += "\n\n```ruby"
+
+    properties.each do |property|
+
+      property_method = resource.instance_method(property)
+
+      # TODO: Show no param usage, where usage, and param usage
+
+      # No param usage
+      #
+      # Alright so if it doesn't have a parameter then it seems
+      # like you could probably just show it's usage in a matcher.
+      # i.e. its('property') { ... }
+
+      # where usage
+      #
+      # I see some methods return params that look like this:
+      #
+      # [[:rest, :args], [:block, :block]]
+      #
+      # These things so far have been related to the filter table
+      # but you would want to check on these things further and I'm
+      # sure some introspection could help find that information
+
+      # param usage
+      #
+      # If it has a param that means it needs to be displayed with the
+      # the resource, like:
+      #
+      # resource.property(param)
+      # resource.property(param, optional_params)
+      #
+      # Of course, this could be tricky because if they resource has
+      # a mandatory parameter you would want to show that. I'm thinking
+      # like the database session resource probably have this thing.
+      # That means a little back-tracking as far as knowing that info.
+
+      p_mandatory_params = property_method.parameters.find_all { |req, name| req == :req }.map { |req, name| name }
+
+      p_optional_params = property_method.parameters.find_all { |req, name| req == :opt }.map { |req, name| name }
+
+      # I don't know if you prefer String or Symbols here
+      inspec_document += "\nits('#{property}') { should matcher_or_operator expected_value }"
+
+      if !p_mandatory_params.empty?
+        inspec_document += "(#{p_mandatory_params.join(', ')})"
+      end
+
+      # If there are optional parameters show the usage again with
+      # the mandatory parameters plus the optional parameters
+
+      if !p_optional_params.empty?
+        inspec_document += "\n#{property}("
+
+        if !p_mandatory_params.empty?
+          inspec_document += "#{p_mandatory_params.join(', ')},"
+        end
+
+        inspec_document += "#{p_optional_params.join(', ')})"
+      end
+
+    end
+
+    inspec_document += "\n```"
   end
+
+  # Now here you are at the matchers. If there are some matchers then
+  # display a summary then display them being used.
+  #
+  # it { should matcher }
 
   if !matchers.empty?
     inspec_document += "\n\n### Matchers\n\n#{be_matchers.join(', ')}"
+
+    inspec_document += "\n\n```ruby"
+
+    be_matchers.each do |be_matcher|
+      inspec_document += "\n it { should #{be_matcher} }"
+    end
+
+    inspec_document += "\n```"
+
   end
 end
 
