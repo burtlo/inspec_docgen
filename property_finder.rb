@@ -207,22 +207,32 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   # mandatory or optional.
   #
 
-  mandatory_params = initialize_method.parameters.find_all { |req, name| req == :mandatory }.map { |req, name| name }
+  mandatory_params = initialize_method.parameters.find_all { |req, name| req == :mandatory || req == :req }.map { |req, name| name }
 
   optional_params = initialize_method.parameters.find_all { |req, name| req == :opt }.map { |req, name| name }
 
   inspec_document += "\n\n```ruby"
   inspec_document += "\n#{resource_name}"
 
+  # later when we show off the properties we should make sure we
+  # show these mandatory parameters. So let's create this variable
+  # called resource_usage and use that later.
+  #
+  # by default it will be the reource name but if you have mandatory
+  # params they should be included...
+
+  resource_usage = resource_name
+
   if !mandatory_params.empty?
     inspec_document += "(#{mandatory_params.join(', ')})"
+    resource_usage += "(#{mandatory_params.join(', ')})"
   end
 
   if !optional_params.empty?
     inspec_document += "\n#{resource_name}("
 
     if !mandatory_params.empty?
-      inspec_document += "#{mandatory_params.join(', ')},"
+      inspec_document += "#{mandatory_params.join(', ')}, "
     end
 
     inspec_document += "#{optional_params.join(', ')})"
@@ -241,15 +251,23 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   be_matchers = matchers.map do |name|
     prefix = ""
 
-    # matchers that start with has shouldn't prefix with be
+    # matchers that start with `has_` shouldn't prefix with be
     #
     # `be_has_interface` seems like a bad idea.
     #
-    # matcher that is exist also should not prefix with be
+    # matcher that is `exist` also should not prefix with be
     #
     # `be_exist` also seems like a bad idea
     #
-    if !name.to_s.start_with?('has') && !(name.to_s == 'exist')
+    # There are some matchers that are `exists?` and well those
+    # still still should be shown as `be_exists`. This could be
+    # a bug for the following resources:
+    #
+    # apt, ppa, bridge, groups, group, iis_app, iis_site, interface,
+    # processes, registry_key, users, user, windows_task, yumrepo,
+    # zfs_dataset, zfs_pool
+    #
+    if !name.to_s.start_with?('has') && !(name.to_s =~ /exist/)
       prefix = "be_"
     end
 
@@ -308,28 +326,44 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
       # like the database session resource probably have this thing.
       # That means a little back-tracking as far as knowing that info.
 
-      p_mandatory_params = property_method.parameters.find_all { |req, name| req == :req }.map { |req, name| name }
+      p_mandatory_params = property_method.parameters.find_all { |req, name| req == :mandatory || req == :req }.map { |req, name| name }
 
       p_optional_params = property_method.parameters.find_all { |req, name| req == :opt }.map { |req, name| name }
 
-      # I don't know if you prefer String or Symbols here
-      inspec_document += "\nits('#{property}') { should matcher_or_operator expected_value }"
-
-      if !p_mandatory_params.empty?
+      # If the property has no parameters then show the sample with an its
+      if p_mandatory_params.empty?
+        inspec_document += "\ndescribe #{resource_usage} do"
+        inspec_document += "\n  its('#{property}') { should matcher_or_operator expected_value }"
+        inspec_document += "\nend"
+      else
+        # TODO: note that if the resource has optional params those are
+        # not currently shown in this example that is being generated.
+        inspec_document += "\ndescribe #{resource_usage}.#{property}"
         inspec_document += "(#{p_mandatory_params.join(', ')})"
+        inspec_document += " do"
+        inspec_document += "\n  it { should matcher_or_operator expected_value }"
+        inspec_document += "\nend"
       end
 
       # If there are optional parameters show the usage again with
       # the mandatory parameters plus the optional parameters
 
       if !p_optional_params.empty?
-        inspec_document += "\n#{property}("
+
+        # TODO: note that if the resource has optional params those are
+        # not currently shown in this example that is being generated.
+        inspec_document += "\ndescribe #{resource_usage}.#{property}"
+        inspec_document += "("
 
         if !p_mandatory_params.empty?
-          inspec_document += "#{p_mandatory_params.join(', ')},"
+          inspec_document += "#{p_mandatory_params.join(', ')}, "
         end
 
         inspec_document += "#{p_optional_params.join(', ')})"
+
+        inspec_document += " do"
+        inspec_document += "\n  it { should matcher_or_operator expected_value }"
+        inspec_document += "\nend"
       end
 
     end
@@ -347,9 +381,13 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
     inspec_document += "\n\n```ruby"
 
+    inspec_document += "\ndescribe #{resource_usage} do"
+
     be_matchers.each do |be_matcher|
       inspec_document += "\n it { should #{be_matcher} }"
     end
+
+    inspec_document += "\nend"
 
     inspec_document += "\n```"
 
