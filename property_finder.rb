@@ -147,14 +147,14 @@ be_matchers = matchers.map do |name|
 
 end
 
-puts "be_matchers: #{be_matchers.join(', ')}"
+# puts "be_matchers: #{be_matchers.join(', ')}"
 
 # Now that you have the list of matchers you can subtract them
 # (recall they are sets). So the properties is the remainder.
 
 properties = registry_key_methods - matchers
 
-puts "properties: #{properties.join(', ')}"
+# puts "properties: #{properties.join(', ')}"
 
 
 # If you were to create some output from this you would probably want to
