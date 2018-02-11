@@ -139,7 +139,7 @@ be_matchers = matchers.map do |name|
 
   prefix = ""
 
-  if !name.to_s.start_with?('has') && !name.to_s == 'exist'
+  if !name.to_s.start_with?('has') && !(name.to_s == 'exist')
     prefix = "be_"
   end
 
