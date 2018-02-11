@@ -9,11 +9,19 @@ aide_conf(aide_conf_path)
 
 ## Supported Properties
 
-* `entries`, `params`, `rules`, `all_have_rule`, `where`, `selection_lines`
+* `params`, `all_have_rule`
 
 ## Property Examples
 
 The following examples show how to use this InSpec aide_conf resource.
+
+### Test if/whether ...
+
+```ruby
+describe aide_conf do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -268,11 +276,19 @@ auditd
 
 ## Supported Properties
 
-* `list`, `entries`, `lines`, `status`, `path`, `key`, `syscall`, `file`, `exit`, `arch`, `fields`, `params`, `permissions`, `action`, `where`, `parse_content`, `fields_nokey`, `file_syscall_syntax_rules_for`, `syscall_rules_for`, `file_rules_for`
+* `lines`, `status`, `params`, `parse_content`, `file_syscall_syntax_rules_for`, `syscall_rules_for`, `file_rules_for`
 
 ## Property Examples
 
 The following examples show how to use this InSpec auditd resource.
+
+### Test if/whether ...
+
+```ruby
+describe auditd do
+  its('list') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -1231,11 +1247,19 @@ crontab(opts)
 
 ## Supported Properties
 
-* `entries`, `content`, `params`, `user`, `commands`, `days`, `where`, `read_crontab`, `crontab_cmd`, `parse_crontab_line`, `minutes`, `hours`, `months`, `weekdays`
+* `params`, `read_crontab`, `crontab_cmd`, `parse_crontab_line`
 
 ## Property Examples
 
 The following examples show how to use this InSpec crontab resource.
+
+### Test if/whether ...
+
+```ruby
+describe crontab do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -1862,11 +1886,19 @@ elasticsearch(opts)
 
 ## Supported Properties
 
-* `entries`, `version`, `host`, `plugins`, `os`, `modules`, `url`, `http`, `transport`, `where`, `settings`, `cluster_name`, `node_name`, `transport_address`, `ip`, `build_hash`, `total_indexing_buffer`, `roles`, `process`, `jvm`, `plugin_list`, `module_list`, `node_id`, `ingest`, `node_count`, `nodes`
+* `url`, `nodes`
 
 ## Property Examples
 
 The following examples show how to use this InSpec elasticsearch resource.
+
+### Test if/whether ...
+
+```ruby
+describe elasticsearch do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -2427,11 +2459,19 @@ etc_fstab(fstab_path)
 
 ## Supported Properties
 
-* `entries`, `params`, `where`, `mount_options`, `device_name`, `mount_point`, `file_system_type`, `dump_options`, `file_system_options`, `nfs_file_systems`, `home_mount_options`
+* `params`, `nfs_file_systems`, `home_mount_options`
 
 ## Property Examples
 
 The following examples show how to use this InSpec etc_fstab resource.
+
+### Test if/whether ...
+
+```ruby
+describe etc_fstab do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -2727,11 +2767,19 @@ etc_hosts_allow(hosts_allow_path)
 
 ## Supported Properties
 
-* `entries`, `options`, `daemon`, `params`, `where`, `client_list`
+* `params`
 
 ## Property Examples
 
 The following examples show how to use this InSpec etc_hosts_allow resource.
+
+### Test if/whether ...
+
+```ruby
+describe etc_hosts_allow do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -2837,11 +2885,19 @@ etc_hosts(hosts_path)
 
 ## Supported Properties
 
-* `entries`, `params`, `where`, `ip_address`, `primary_name`, `all_host_names`
+* `params`
 
 ## Property Examples
 
 The following examples show how to use this InSpec etc_hosts resource.
+
+### Test if/whether ...
+
+```ruby
+describe etc_hosts do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -2969,11 +3025,19 @@ firewalld
 
 ## Supported Properties
 
-* `entries`, `zone`, `sources`, `params`, `where`, `interfaces`, `services`, `default_zone`, `service_ports_enabled_in_zone`, `service_protocols_enabled_in_zone`
+* `params`, `default_zone`, `service_ports_enabled_in_zone`, `service_protocols_enabled_in_zone`
 
 ## Property Examples
 
 The following examples show how to use this InSpec firewalld resource.
+
+### Test if/whether ...
+
+```ruby
+describe firewalld do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -3207,11 +3271,19 @@ groups
 
 ## Supported Properties
 
-* `names`, `entries`, `where`, `gids`, `domains`
+* 
 
 ## Property Examples
 
 The following examples show how to use this InSpec groups resource.
+
+### Test if/whether ...
+
+```ruby
+describe groups do
+  its('names') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -4545,15 +4617,15 @@ end
 
 ```ruby
 describe nginx_conf do
-  its('locations') { should matcher_or_operator expected_value }
+  its('servers') { should matcher_or_operator expected_value }
 end
 ```
 
-### Test whether server for value contains a particular servers
+### Test if/whether ...
 
 ```ruby
-describe nginx_conf.where { server operator value } do
-  its('servers') { should matcher_or_operator expected_value }
+describe nginx_conf do
+  its('locations') { should matcher_or_operator expected_value }
 end
 ``````
 
@@ -4870,11 +4942,19 @@ packages(pattern)
 
 ## Supported Properties
 
-* `names`, `entries`, `versions`, `where`, `statuses`
+* 
 
 ## Property Examples
 
 The following examples show how to use this InSpec packages resource.
+
+### Test if/whether ...
+
+```ruby
+describe packages(pattern) do
+  its('names') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -4987,11 +5067,19 @@ passwd(path, opts)
 
 ## Supported Properties
 
-* `entries`, `count`, `lines`, `uid`, `content`, `params`, `where`, `username`, `gids`, `users`, `passwords`, `uids`, `descs`, `homes`, `shells`, `usernames`
+* `lines`, `uid`, `params`
 
 ## Property Examples
 
 The following examples show how to use this InSpec passwd resource.
+
+### Test if/whether ...
+
+```ruby
+describe passwd do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -5278,11 +5366,19 @@ port
 
 ## Supported Properties
 
-* `entries`, `where`, `ports`, `addresses`, `protocols`, `processes`, `pids`
+* 
 
 ## Property Examples
 
 The following examples show how to use this InSpec port resource.
+
+### Test if/whether ...
+
+```ruby
+describe port do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -5456,11 +5552,19 @@ postgres_hba_conf(hba_conf_path)
 
 ## Supported Properties
 
-* `entries`, `type`, `params`, `user`, `where`, `address`, `conf_file`, `database`, `auth_method`, `auth_params`
+* `params`, `conf_file`
 
 ## Property Examples
 
 The following examples show how to use this InSpec postgres_hba_conf resource.
+
+### Test if/whether ...
+
+```ruby
+describe postgres_hba_conf do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -5639,11 +5743,19 @@ postgres_ident_conf(ident_conf_path)
 
 ## Supported Properties
 
-* `entries`, `params`, `where`, `conf_file`, `map_name`, `system_username`, `pg_username`
+* `params`, `conf_file`
 
 ## Property Examples
 
 The following examples show how to use this InSpec postgres_ident_conf resource.
+
+### Test if/whether ...
+
+```ruby
+describe postgres_ident_conf do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -5839,7 +5951,7 @@ processes(grep)
 
 ## Supported Properties
 
-* `list`, `entries`, `start`, `time`, `commands`, `mem`, `where`, `labels`, `users`, `pids`, `cpus`, `vsz`, `rss`, `tty`, `states`
+* `list`
 
 ## Property Examples
 
@@ -5850,6 +5962,14 @@ The following examples show how to use this InSpec processes resource.
 ```ruby
 describe processes do
   its('list') { should matcher_or_operator expected_value }
+end
+```
+
+### Test if/whether ...
+
+```ruby
+describe processes do
+  its('entries') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -6547,6 +6667,14 @@ end
 
 ```ruby
 describe shadow do
+  its('count') { should matcher_or_operator expected_value }
+end
+```
+
+### Test if/whether ...
+
+```ruby
+describe shadow do
   its('lines') { should matcher_or_operator expected_value }
 end
 ```
@@ -6766,11 +6894,19 @@ ssl(opts)
 
 ## Supported Properties
 
-* `entries`, `host`, `timeout`, `ciphers`, `port`, `where`, `protocols`, `retries`, `handshake`
+* `host`, `timeout`, `port`, `retries`
 
 ## Property Examples
 
 The following examples show how to use this InSpec ssl resource.
+
+### Test if/whether ...
+
+```ruby
+describe ssl do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -6934,11 +7070,19 @@ users
 
 ## Supported Properties
 
-* `entries`, `groups`, `where`, `gids`, `uids`, `homes`, `shells`, `usernames`, `groupnames`, `mindays`, `maxdays`, `warndays`, `disabled`
+* 
 
 ## Property Examples
 
 The following examples show how to use this InSpec users resource.
+
+### Test if/whether ...
+
+```ruby
+describe users do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 
@@ -7783,11 +7927,19 @@ xinetd_conf(conf_path)
 
 ## Supported Properties
 
-* `entries`, `wait`, `types`, `params`, `where`, `ids`, `services`, `protocols`, `socket_types`
+* `params`
 
 ## Property Examples
 
 The following examples show how to use this InSpec xinetd_conf resource.
+
+### Test if/whether ...
+
+```ruby
+describe xinetd_conf do
+  its('entries') { should matcher_or_operator expected_value }
+end
+```
 
 ### Test if/whether ...
 

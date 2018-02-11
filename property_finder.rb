@@ -293,13 +293,21 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
     # General list of properties ...
 
     inspec_document += "\n\n## Supported Properties"
-    inspec_document += "\n\n* #{properties.map {|p| "`#{p}`" }.join(', ')}"
+
+    supported_properties = properties.reject do |property|
+      # @note if the source is defined in a lib/utils/filter.rb then it is a
+      # filtering property and there is different ways to display it.
+      resource.instance_method(property).source_location.first.to_s.end_with?('filter.rb')
+    end
+
+    property_has_filters = properties != supported_properties
+    puts("  + detected resource has filtering") if property_has_filters
+
+    inspec_document += "\n\n* #{supported_properties.map {|p| "`#{p}`" }.join(', ')}"
 
     inspec_document += "\n\n## Property Examples"
 
     inspec_document += "\n\nThe following examples show how to use this InSpec #{resource_name} resource."
-
-    property_probably_has_filters = false
 
     properties.each do |property|
 
@@ -311,24 +319,7 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
       # like you could probably just show it's usage in a matcher.
       # i.e. its('property') { ... }
 
-      # where usage
-      #
-      # I see some methods return params that look like this:
-      #
-      # [[:rest, :args], [:block, :block]]
-      #
-      # These things so far have been related to the filter table
-      # but you would want to check on these things further and I'm
-      # sure some introspection could help find that information
       p_params = property_method.parameters
-
-      # TODO: actually look at the source. The source for these methods
-      # will come from the filter.rb file in InSpec
-      if !property_probably_has_filters && p_params.count == 2 && p_params.first == [ :rest, :args ] && p_params.last == [ :block, :block ]
-        puts "  + detected resource has filtering"
-        property_probably_has_filters = true
-        next
-      end
 
       # param usage
       #
@@ -405,7 +396,7 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
     # Grab all the source code for the resource
 
-    if property_probably_has_filters && resource_source_file
+    if property_has_filters && resource_source_file
       puts "  & looking for filters in source file"
       resource_content = File.read(resource_source_file)
 
