@@ -178,6 +178,8 @@ Inspec::Resource.registry
 inspec_document = "# InSpec Resource"
 
 Inspec::Resource.registry.each do |resource_name, resource_class|
+  puts "Looking at resource: #{resource_name}"
+
   # However, this resource_class is actually a descendent of the original
   # class that you want. So you cannot ask for the instance_methods on it.
   # You need to traverse one level up to its superclass.
@@ -195,6 +197,10 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   # each method and the parameters it takes.
 
   initialize_method = resource.instance_method(:initialize)
+
+  # Knowing the source of the file gives you a workaround for the problem
+  # of the FilterTable.
+  resource_source_file = initialize_method.source_location.first if initialize_method.source_location
 
   # This thing above is an instance of an UnboundMethod
   # @see https://ruby-doc.org/core-2.2.0/UnboundMethod.html
@@ -286,16 +292,18 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
     # General list of properties ...
 
-    inspec_document += "\n\n### Properties"
-    inspec_document += "\n\n    #{properties.join(', ')}"
+    inspec_document += "\n\n## Supported Properties"
+    inspec_document += "\n\n* #{properties.map {|p| "`#{p}`" }.join(', ')}"
 
-    inspec_document += "\n\n```ruby"
+    inspec_document += "\n\n## Property Examples"
+
+    inspec_document += "\n\nThe following examples show how to use this InSpec #{resource_name} resource."
+
+    property_probably_has_filters = false
 
     properties.each do |property|
 
       property_method = resource.instance_method(property)
-
-      # TODO: Show no param usage, where usage, and param usage
 
       # No param usage
       #
@@ -312,6 +320,15 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
       # These things so far have been related to the filter table
       # but you would want to check on these things further and I'm
       # sure some introspection could help find that information
+      p_params = property_method.parameters
+
+      # TODO: actually look at the source. The source for these methods
+      # will come from the filter.rb file in InSpec
+      if !property_probably_has_filters && p_params.count == 2 && p_params.first == [ :rest, :args ] && p_params.last == [ :block, :block ]
+        puts "  + detected resource has filtering"
+        property_probably_has_filters = true
+        next
+      end
 
       # param usage
       #
@@ -330,6 +347,9 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
       p_optional_params = property_method.parameters.find_all { |req, name| req == :opt }.map { |req, name| name }
 
+      inspec_document += "\n\n### Test if/whether ..."
+      inspec_document += "\n\n```ruby"
+
       # If the property has no parameters then show the sample with an its
       if p_mandatory_params.empty?
         inspec_document += "\ndescribe #{resource_usage} do"
@@ -345,10 +365,15 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
         inspec_document += "\nend"
       end
 
+      inspec_document += "\n```"
+
       # If there are optional parameters show the usage again with
       # the mandatory parameters plus the optional parameters
 
       if !p_optional_params.empty?
+
+        inspec_document += "\n\n### Test if/whether ..."
+        inspec_document += "\n\n```ruby"
 
         # TODO: note that if the resource has optional params those are
         # not currently shown in this example that is being generated.
@@ -363,12 +388,86 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
         inspec_document += " do"
         inspec_document += "\n  it { should matcher_or_operator expected_value }"
-        inspec_document += "\nend"
+        inspec_document += "\nend\n"
+
+        inspec_document += "```"
       end
 
     end
 
-    inspec_document += "\n```"
+    # Welcome to the craziest way to solve the filter discovery problem.
+    #
+    # So let's look at the source code. Then let's look to find where
+    # a FilterTable is created and then manually tear apart that table
+    # so that we can learn the fields. This is something that probably
+    # needs to be done up above to find the accessors. But I'll wait
+    # before introducing more of this insanity.
+
+    # Grab all the source code for the resource
+
+    if property_probably_has_filters && resource_source_file
+      puts "  & looking for filters in source file"
+      resource_content = File.read(resource_source_file)
+
+      filter_var_name = nil
+
+      accessors = []
+      fields = []
+
+      creating_a_filter_table = false
+
+      resource_content.lines do |line|
+        # Find the creation of the FilterTable.
+        if filter_match = line.match(/(?<filter>.+)\s*=\s*FilterTable\.create/)
+          filter_var_name = filter_match['filter'].strip
+          puts "    * found filter var name: #{filter_var_name}"
+        end
+
+        if filter_var_name && line.lstrip.start_with?(filter_var_name)
+          # so now this line is probably the start of a filter table
+          # definition using their fluent interface.
+          creating_a_filter_table = true
+        end
+
+        if creating_a_filter_table
+          puts "    ? looking in filter table at line: #{line}"
+
+          if field_matches = line.match(/\s*\.add\(:(?<field_property>[^\s]+)\s*,\s*field:\s+[':](?<field>[^'\)]+)'?\)/)
+            field_property = field_matches['field_property']
+            field = field_matches['field']
+            puts "    + field #{field} and property: #{field_property}"
+            fields.push [ field, field_property ]
+          end
+
+          if accessor_matches = line.match(/\s*(?:#{filter_var_name})?\.add_accessor\(:(?<accessor>[^)]+)\)/)
+            puts "    + accessor: #{accessor_matches['accessor']}"
+            accessors.push accessor_matches['accessor']
+          end
+        end
+
+        # This is the point that the filter table is done so lets stop
+        if filter_var_name && line =~ /\s*(?:#{filter_var_name})?\.connect/
+          puts "    ! filter table examination complete"
+          creating_a_filter_table = false
+          break
+        end
+      end
+
+      # property_filter_methods.each do |field|
+      accessors.each do |accessor|
+        fields.each do |field, field_property|
+          inspec_document += "\n\n### Test whether #{field.gsub('_',' ')} for value contains a particular #{field_property}"
+          inspec_document += "\n\n```ruby"
+
+          inspec_document += "\ndescribe #{resource_usage}.#{accessor} { #{field} operator value } do"
+          inspec_document += "\n  its('#{field_property}') { should matcher_or_operator expected_value }"
+          inspec_document += "\nend"
+          inspec_document += "\n```"
+        end
+      end
+    end
+
+    inspec_document += "```"
   end
 
   # Now here you are at the matchers. If there are some matchers then
@@ -377,7 +476,13 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
   # it { should matcher }
 
   if !matchers.empty?
-    inspec_document += "\n\n### Matchers\n\n#{be_matchers.join(', ')}"
+    inspec_document += "\n\n## Matchers"
+    inspec_document += "\n\nFor a full list of available matchers please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/)."
+
+    inspec_document += "\n\nThis InSpec #{resource_name} resource uses the matchers"
+    inspec_document += " #{be_matchers.map {|m| "`#{m}`" }.join(', ')}"
+
+    inspec_document += "\n\n## Matchers Example"
 
     inspec_document += "\n\n```ruby"
 
