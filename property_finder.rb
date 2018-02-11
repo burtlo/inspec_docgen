@@ -309,7 +309,7 @@ Inspec::Resource.registry.each do |resource_name, resource_class|
 
     inspec_document += "\n\nThe following examples show how to use this InSpec #{resource_name} resource."
 
-    properties.each do |property|
+    supported_properties.each do |property|
 
       property_method = resource.instance_method(property)
 

@@ -19,23 +19,7 @@ The following examples show how to use this InSpec aide_conf resource.
 
 ```ruby
 describe aide_conf do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe aide_conf do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe aide_conf do
-  its('rules') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -44,22 +28,6 @@ end
 ```ruby
 describe aide_conf.all_have_rule(rule) do
   it { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe aide_conf do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe aide_conf do
-  its('selection_lines') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -286,22 +254,6 @@ The following examples show how to use this InSpec auditd resource.
 
 ```ruby
 describe auditd do
-  its('list') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
   its('lines') { should matcher_or_operator expected_value }
 end
 ```
@@ -326,62 +278,6 @@ end
 
 ```ruby
 describe auditd do
-  its('path') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('key') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('syscall') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('file') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('exit') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('arch') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('fields') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
   its('params') { should matcher_or_operator expected_value }
 end
 ```
@@ -390,39 +286,7 @@ end
 
 ```ruby
 describe auditd do
-  its('permissions') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('action') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
   its('parse_content') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe auditd do
-  its('fields_nokey') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -1257,55 +1121,7 @@ The following examples show how to use this InSpec crontab resource.
 
 ```ruby
 describe crontab do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('content') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('user') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('commands') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('days') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('where') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -1330,38 +1146,6 @@ end
 ```ruby
 describe crontab.parse_crontab_line(l) do
   it { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('minutes') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('hours') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('months') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe crontab do
-  its('weekdays') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -1896,199 +1680,7 @@ The following examples show how to use this InSpec elasticsearch resource.
 
 ```ruby
 describe elasticsearch do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('version') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('host') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('plugins') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('os') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('modules') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
   its('url') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('http') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('transport') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('settings') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('cluster_name') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('node_name') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('transport_address') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('ip') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('build_hash') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('total_indexing_buffer') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('roles') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('process') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('jvm') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('plugin_list') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('module_list') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('node_id') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('ingest') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe elasticsearch do
-  its('node_count') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -2469,71 +2061,7 @@ The following examples show how to use this InSpec etc_fstab resource.
 
 ```ruby
 describe etc_fstab do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('mount_options') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('device_name') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('mount_point') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('file_system_type') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('dump_options') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_fstab do
-  its('file_system_options') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -2777,47 +2305,7 @@ The following examples show how to use this InSpec etc_hosts_allow resource.
 
 ```ruby
 describe etc_hosts_allow do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts_allow do
-  its('options') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts_allow do
-  its('daemon') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts_allow do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts_allow do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts_allow do
-  its('client_list') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -2895,47 +2383,7 @@ The following examples show how to use this InSpec etc_hosts resource.
 
 ```ruby
 describe etc_hosts do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts do
-  its('ip_address') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts do
-  its('primary_name') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe etc_hosts do
-  its('all_host_names') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -3035,55 +2483,7 @@ The following examples show how to use this InSpec firewalld resource.
 
 ```ruby
 describe firewalld do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
-  its('zone') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
-  its('sources') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
-  its('interfaces') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe firewalld do
-  its('services') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -3276,46 +2676,6 @@ groups
 ## Property Examples
 
 The following examples show how to use this InSpec groups resource.
-
-### Test if/whether ...
-
-```ruby
-describe groups do
-  its('names') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe groups do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe groups do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe groups do
-  its('gids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe groups do
-  its('domains') { should matcher_or_operator expected_value }
-end
-```
 
 ### Test whether name for value contains a particular names
 
@@ -4948,46 +4308,6 @@ packages(pattern)
 
 The following examples show how to use this InSpec packages resource.
 
-### Test if/whether ...
-
-```ruby
-describe packages(pattern) do
-  its('names') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe packages(pattern) do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe packages(pattern) do
-  its('versions') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe packages(pattern) do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe packages(pattern) do
-  its('statuses') { should matcher_or_operator expected_value }
-end
-```
-
 ### Test whether name for value contains a particular names
 
 ```ruby
@@ -5077,22 +4397,6 @@ The following examples show how to use this InSpec passwd resource.
 
 ```ruby
 describe passwd do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('count') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
   its('lines') { should matcher_or_operator expected_value }
 end
 ```
@@ -5109,95 +4413,7 @@ end
 
 ```ruby
 describe passwd do
-  its('content') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('username') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('gids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('users') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('passwords') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('uids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('descs') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('homes') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('shells') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe passwd do
-  its('usernames') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -5370,63 +4586,7 @@ port
 
 ## Property Examples
 
-The following examples show how to use this InSpec port resource.
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('ports') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('addresses') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('protocols') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('processes') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe port do
-  its('pids') { should matcher_or_operator expected_value }
-end
-``````
+The following examples show how to use this InSpec port resource.```
 
 ## Matchers
 
@@ -5562,22 +4722,6 @@ The following examples show how to use this InSpec postgres_hba_conf resource.
 
 ```ruby
 describe postgres_hba_conf do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('type') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
   its('params') { should matcher_or_operator expected_value }
 end
 ```
@@ -5586,55 +4730,7 @@ end
 
 ```ruby
 describe postgres_hba_conf do
-  its('user') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('address') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
   its('conf_file') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('database') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('auth_method') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_hba_conf do
-  its('auth_params') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -5753,14 +4849,6 @@ The following examples show how to use this InSpec postgres_ident_conf resource.
 
 ```ruby
 describe postgres_ident_conf do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_ident_conf do
   its('params') { should matcher_or_operator expected_value }
 end
 ```
@@ -5769,39 +4857,7 @@ end
 
 ```ruby
 describe postgres_ident_conf do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_ident_conf do
   its('conf_file') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_ident_conf do
-  its('map_name') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_ident_conf do
-  its('system_username') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe postgres_ident_conf do
-  its('pg_username') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -5962,118 +5018,6 @@ The following examples show how to use this InSpec processes resource.
 ```ruby
 describe processes do
   its('list') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('start') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('time') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('commands') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('mem') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('labels') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('users') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('pids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('cpus') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('vsz') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('rss') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('tty') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe processes do
-  its('states') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -6904,14 +5848,6 @@ The following examples show how to use this InSpec ssl resource.
 
 ```ruby
 describe ssl do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe ssl do
   its('host') { should matcher_or_operator expected_value }
 end
 ```
@@ -6928,14 +5864,6 @@ end
 
 ```ruby
 describe ssl do
-  its('ciphers') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe ssl do
   its('port') { should matcher_or_operator expected_value }
 end
 ```
@@ -6944,31 +5872,7 @@ end
 
 ```ruby
 describe ssl do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe ssl do
-  its('protocols') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe ssl do
   its('retries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe ssl do
-  its('handshake') { should matcher_or_operator expected_value }
 end
 ```
 
@@ -7075,110 +5979,6 @@ users
 ## Property Examples
 
 The following examples show how to use this InSpec users resource.
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('groups') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('gids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('uids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('homes') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('shells') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('usernames') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('groupnames') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('mindays') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('maxdays') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('warndays') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe users do
-  its('disabled') { should matcher_or_operator expected_value }
-end
-```
 
 ### Test whether username for value contains a particular usernames
 
@@ -7937,71 +6737,7 @@ The following examples show how to use this InSpec xinetd_conf resource.
 
 ```ruby
 describe xinetd_conf do
-  its('entries') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('wait') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('types') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
   its('params') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('where') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('ids') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('services') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('protocols') { should matcher_or_operator expected_value }
-end
-```
-
-### Test if/whether ...
-
-```ruby
-describe xinetd_conf do
-  its('socket_types') { should matcher_or_operator expected_value }
 end
 ```
 
